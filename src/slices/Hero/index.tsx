@@ -1,8 +1,12 @@
+"use client";
+
 import { FC } from "react";
 import { Content } from "@prismicio/client";
 import { PrismicRichText, SliceComponentProps } from "@prismicio/react";
 
-import { Bounded } from "@/components/bounded";
+import Bounded from "@/components/Bounded";
+import { Canvas } from "@react-three/fiber";
+import Scene from "./Scene";
 
 export type HeroProps = SliceComponentProps<Content.HeroSlice>;
 
@@ -14,7 +18,9 @@ const Hero: FC<HeroProps> = ({ slice }) => {
       className="blue-gradient-bg relative h-dvh text-white text-shadow-black/30 text-shadow-lg"
     >
       <div className="hero-scene pointer-events-none sticky top-0 h-dvh w-full">
-        {/* canvas */}
+        <Canvas shadows="soft">
+          <Scene />
+        </Canvas>
       </div>
       <div className="hero-content absolute inset-x-0 top-0 h-dvh">
         <Bounded
@@ -49,11 +55,11 @@ const Hero: FC<HeroProps> = ({ slice }) => {
               }}
             />
           </div>{" "}
+          <button className="group flex w-fit cursor-pointer items-center gap-1 rounded bg-[#01A7E1] px-3 py-1 font-bold-slanted text-2xl uppercase transition disabled:grayscale">
+            {slice.primary.buy_button_text}
+            <span className="transition group-hover:translate-x-1">{">"}</span>
+          </button>
         </Bounded>
-        <button className="group flex w-fit cursor-pointer items-center gap-1 rounded bg-[#01A7E1] px-3 py-1 font-bold-slanted text-2xl uppercase transition disabled:grayscale">
-          {slice.primary.buy_button_text}
-          <span className="transition group-hover:translate-x-1">{">"}</span>
-        </button>
       </div>
     </section>
   );

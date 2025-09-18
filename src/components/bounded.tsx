@@ -9,7 +9,7 @@ type BoundedProps = {
   children?: ReactNode;
 };
 
-export function Bounded({
+export default function Bounded({
   as: Comp = "section",
   fullWidth = false,
   className,
