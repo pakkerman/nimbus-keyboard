@@ -1,0 +1,36 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"heading": {
+				"__TYPE__": "StructuredTextContent",
+				"value": [
+					{
+						"type": "heading1",
+						"content": {
+							"text": "Shadow"
+						}
+					}
+				]
+			},
+			"body": {
+				"__TYPE__": "StructuredTextContent",
+				"value": [
+					{
+						"type": "paragraph",
+						"content": {
+							"text": "Eiusmod fugiat ipsum aliqua sint officia sit ea laboris amet do. Laboris dolore quis aute esse qui dolore velit est qui reprehenderit minim labore non incididunt."
+						}
+					}
+				]
+			},
+			"by_button_text": {
+				"__TYPE__": "FieldContent",
+				"value": "small",
+				"type": "Text"
+			}
+		},
+		"items": []
+	}
+]
