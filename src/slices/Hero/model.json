@@ -30,10 +30,10 @@
             "multi": "paragraph,heading2,strong,em"
           }
         },
-        "by_button_text": {
+        "buy_button_text": {
           "type": "Text",
           "config": {
-            "label": "By Button Text",
+            "label": "Buy Button Text",
             "placeholder": ""
           }
         }

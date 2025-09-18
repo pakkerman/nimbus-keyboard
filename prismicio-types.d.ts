@@ -161,14 +161,14 @@ export interface HeroSliceDefaultPrimary {
   body: prismic.RichTextField;
 
   /**
-   * By Button Text field in *Hero → Default → Primary*
+   * Buy Button Text field in *Hero → Default → Primary*
    *
    * - **Field Type**: Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: hero.default.primary.by_button_text
+   * - **API ID Path**: hero.default.primary.buy_button_text
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
-  by_button_text: prismic.KeyTextField;
+  buy_button_text: prismic.KeyTextField;
 }
 
 /**
