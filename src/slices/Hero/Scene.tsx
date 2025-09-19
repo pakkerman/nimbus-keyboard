@@ -5,15 +5,15 @@ import { Environment, PerspectiveCamera } from "@react-three/drei";
 import { useControls } from "leva";
 
 export default function Scene() {
-  const { positionX, positionY, positionZ, rotationX, rotationY, rotationZ } =
-    useControls({
-      positionX: 0,
-      positionY: -0.5,
-      positionZ: 3,
-      rotationX: Math.PI / 2,
-      rotationY: 0,
-      rotationZ: 0,
-    });
+  // const { positionX, positionY, positionZ, rotationX, rotationY, rotationZ } =
+  //   useControls({
+  //     positionX: 0,
+  //     positionY: -0.5,
+  //     positionZ: 3,
+  //     rotationX: Math.PI / 2,
+  //     rotationY: 0,
+  //     rotationZ: 0,
+  //   });
 
   const scalingFactor = window.innerWidth <= 500 ? 0.5 : 1;
 
