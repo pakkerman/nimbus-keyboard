@@ -37,6 +37,7 @@ export default function Keycap({
   const uvTexture = textures[texture];
   const keycapTexture = useTexture(uvTexture);
   keycapTexture.flipY = false;
+  keycapTexture.colorSpace = THREE.SRGBColorSpace;
 
   const placeholderMat = new THREE.MeshStandardMaterial({
     map: keycapTexture,
