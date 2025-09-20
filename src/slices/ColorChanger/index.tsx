@@ -1,6 +1,8 @@
 "use client";
 
 import { FC, useCallback, useState } from "react";
+import Image from "next/image";
+import { Canvas } from "@react-three/fiber";
 import clsx from "clsx";
 
 import { Content } from "@prismicio/client";
@@ -11,8 +13,6 @@ import {
 } from "@prismicio/react";
 
 import Bounded from "@/components/Bounded";
-import Image from "next/image";
-import { Canvas } from "@react-three/fiber";
 import Scene from "./Scene";
 
 export const KEYCAP_TEXTURES = [
@@ -63,6 +63,7 @@ const ColorChanger: FC<ColorChangerProps> = ({ slice }) => {
   function handleTextureSelect(texture: KeycapTexture) {
     if (texture.id === selectedTextureId || isAnimating) return;
 
+    setIsAnimating(true);
     setSelectedTextureId(texture.id);
     setBackgroundText(
       KEYCAP_TEXTURES.find((t) => t.id === texture.id)?.name || "",
@@ -128,6 +129,7 @@ const ColorChanger: FC<ColorChangerProps> = ({ slice }) => {
             <li key={texture.id} className="">
               <button
                 onClick={() => handleTextureSelect(texture)}
+                disabled={isAnimating}
                 className={clsx(
                   "flex aspect-square h-full flex-col items-center justify-center rounded-lg border-2 p-4 hover:scale-105 motion-safe:transition-all motion-safe:duration-300",
                   selectedTextureId === texture.id
