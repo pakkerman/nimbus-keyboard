@@ -11,8 +11,9 @@ import { Content } from "@prismicio/client";
 
 import Bounded from "@/components/Bounded";
 import Scene from "./Scene";
+import ScrollTrigger from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(useGSAP, SplitText);
+gsap.registerPlugin(useGSAP, SplitText, ScrollTrigger);
 
 export type HeroProps = SliceComponentProps<Content.HeroSlice>;
 
@@ -38,7 +39,27 @@ const Hero: FC<HeroProps> = ({ slice }) => {
         duration: 0.6,
         ease: "power2.out",
       });
+
+      gsap.fromTo(
+        ".hero-scene",
+        {
+          background:
+            "linear-gradient(to bottom, #000000, #0f172a, #062f4a, #7fa0b9)",
+        },
+        {
+          background:
+            "linear-gradient(to bottom, #ffffff, #ffffff, #ffffff, #ffffff)",
+          scrollTrigger: {
+            trigger: ".hero",
+            start: "top top",
+            end: "50% bottom",
+            scrub: 1,
+          },
+        },
+      );
     });
+
+    // reduced motion
     mm.add("(prefers-reduced-motion: reduced)", () => {
       gsap.set(".hero-heading, .hero-body", { opacity: 1 });
     });
@@ -48,7 +69,7 @@ const Hero: FC<HeroProps> = ({ slice }) => {
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className="blue-gradient-bg relative h-dvh text-white text-shadow-black/30 text-shadow-lg"
+      className="hero relative h-dvh text-white text-shadow-black/30 text-shadow-lg motion-safe:h-[300vh]"
     >
       <div className="hero-scene pointer-events-none sticky top-0 h-dvh w-full">
         <Canvas shadows="soft">
@@ -87,7 +108,7 @@ const Hero: FC<HeroProps> = ({ slice }) => {
                 ),
               }}
             />
-          </div>{" "}
+          </div>
           <button className="group flex w-fit cursor-pointer items-center gap-1 rounded bg-[#01A7E1] px-3 py-1 font-bold-slanted text-2xl uppercase transition disabled:grayscale">
             {slice.primary.buy_button_text}
             <span className="transition group-hover:translate-x-1">{">"}</span>
