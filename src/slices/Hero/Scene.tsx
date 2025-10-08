@@ -71,7 +71,7 @@ function CameraController() {
 
       return () => window.removeEventListener("mousemove", handleMouseMove);
     }
-  }, [size]);
+  }, [size, prefersReducedMotion]);
 
   return null;
 }

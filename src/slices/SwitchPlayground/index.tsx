@@ -11,11 +11,13 @@ import {
 } from "@prismicio/react";
 
 import { Canvas } from "@react-three/fiber";
+import gsap from "gsap";
 
 import Bounded from "@/components/Bounded";
 import FadeIn from "@/components/FadeIn";
-import Switch from "@/components/Switch";
+import Switch, { SOUND_MAP } from "@/components/Switch";
 import { Stage } from "@react-three/drei";
+import { LuVolume2 } from "react-icons/lu";
 
 export type SlicePlaygroundProps =
   SliceComponentProps<Content.SlicePlaygroundSlice>;
@@ -70,9 +72,23 @@ const SharedCanvas = ({ color }: SharedCanvasProps) => {
     black: "bg-gray-900",
   }[colorName];
 
+  const handleSound = () => {
+    const selectedSound = gsap.utils.random(SOUND_MAP[colorName]);
+
+    const audio = new Audio(selectedSound);
+    audio.volume = 0.6;
+    audio.play();
+  };
+
   return (
     <div className="group relative min-h-96 overflow-hidden rounded-3xl select-none">
       {/* text button */}
+      <button
+        onClick={handleSound}
+        className="absolute z-10 bottom-0 left-0 flex items-center gap-3 p-6 font-bold-slanted text-4xl text-white uppercase focus:ring-2 focus:ring-white focus:outline-none"
+      >
+        {name} <LuVolume2 />
+      </button>
       {/* canvas */}
       <Canvas camera={{ position: [1.5, 2, 0], fov: 7 }}>
         <Stage
@@ -101,7 +117,7 @@ const SharedCanvas = ({ color }: SharedCanvasProps) => {
             dominantBaseline="middle"
             textAnchor="middle"
             fontSize={18}
-            className="font-black-slanted fill-white/30 uppercase mix-blend-overlay group-hover:fill-white/100 motion-safe:transition-all motion-safe:duration-700"
+            className="fill-white/30 font-black-slanted uppercase mix-blend-overlay group-hover:fill-white/100 motion-safe:transition-all motion-safe:duration-700"
           >
             {Array.from({ length: 8 }, (_, idx) => (
               <tspan
