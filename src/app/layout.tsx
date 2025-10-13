@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Roboto_Flex } from "next/font/google";
 
+import { PrismicPreview } from "@prismicio/next";
+import { repositoryName } from "@/prismicio";
+
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -29,6 +32,7 @@ export default function RootLayout({
         <main>{children}</main>
       </body>
       <Footer />
+      <PrismicPreview repositoryName={repositoryName} />
     </html>
   );
 }
