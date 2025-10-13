@@ -15,6 +15,7 @@ import { LuChevronRight, LuLoader } from "react-icons/lu";
 
 import Bounded from "@/components/Bounded";
 import FadeIn from "@/components/FadeIn";
+import checkout from "@/checkout";
 
 gsap.registerPlugin(useGSAP);
 
@@ -28,7 +29,7 @@ const PurchaseButton: FC<PurchaseButtonProps> = ({ slice }) => {
 
   const handlePurchaseClick = async () => {
     setIsPressed(true);
-    // TODO: add checkout logic later
+    await checkout();
 
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
