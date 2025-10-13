@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, Suspense } from "react";
+import { FC, Suspense, useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -14,13 +14,33 @@ import Scene from "./Scene";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import Loader from "@/components/Loader";
 import { useProgress } from "@react-three/drei";
+import clsx from "clsx";
 
 gsap.registerPlugin(useGSAP, SplitText, ScrollTrigger);
 
 function LoaderWrapper() {
   const { active } = useProgress();
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    if (active) setIsLoading(true);
+    else {
+      const timer = setTimeout(() => {
+        setIsLoading(false);
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [active]);
 
-  return active ? <Loader /> : null;
+  return (
+    <div
+      className={clsx(
+        "motion-safe:transition-opacity motion-safe:duration-700",
+        isLoading ? "opacity-100" : "opacity-0 pointer-events-none",
+      )}
+    >
+      <Loader />
+    </div>
+  );
 }
 
 export type HeroProps = SliceComponentProps<Content.HeroSlice>;
