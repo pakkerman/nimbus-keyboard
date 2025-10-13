@@ -31,7 +31,10 @@ const SlicePlayground: FC<SlicePlaygroundProps> = ({ slice }) => {
       innerClassName="flex flex-col justify-center"
     >
       <FadeIn>
-        <h2 className="scroll-pt-6 font-bold-slanted text-6xl uppercase md:text-8xl">
+        <h2
+          id="switch-playground"
+          className="scroll-pt-6 font-bold-slanted text-6xl uppercase md:text-8xl"
+        >
           <PrismicText field={slice.primary.heading} />
         </h2>
         <div className="mb-6 max-w-4xl text-xl text-pretty">

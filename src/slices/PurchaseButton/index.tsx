@@ -95,7 +95,10 @@ const PurchaseButton: FC<PurchaseButtonProps> = ({ slice }) => {
         <p className="mb-6 text-xl font-medium text-gray-700 md:text-2xl">
           {slice.primary.eyebrow}
         </p>
-        <h2 className="mb-8 scroll-pt-6 font-bold-slanted text-5xl text-gray-900 uppercase md:text-7xl lg:text-8xl">
+        <h2
+          id="buy-button"
+          className="mb-8 scroll-pt-6 font-bold-slanted text-5xl text-gray-900 uppercase md:text-7xl lg:text-8xl"
+        >
           <PrismicText field={slice.primary.heading} />
         </h2>
 
