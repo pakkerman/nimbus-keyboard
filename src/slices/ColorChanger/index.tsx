@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useState } from "react";
 import Image from "next/image";
 import { Canvas } from "@react-three/fiber";
 import clsx from "clsx";
@@ -53,12 +53,6 @@ type KeycapTexture = (typeof KEYCAP_TEXTURES)[number];
 
 export type ColorChangerProps = SliceComponentProps<Content.ColorChangerSlice>;
 
-const width = document.documentElement.clientWidth;
-let scale = 1.8;
-
-if (width < 768) scale = 0.9;
-else if (width < 1024) scale = 1;
-
 const ColorChanger: FC<ColorChangerProps> = ({ slice }) => {
   const [selectedTextureId, setSelectedTextureId] = useState(
     KEYCAP_TEXTURES[0].id,
@@ -78,6 +72,12 @@ const ColorChanger: FC<ColorChangerProps> = ({ slice }) => {
 
   const handleAnimationComplete = useCallback(() => {
     setIsAnimating(false);
+
+    document.querySelector("#keycap-changer")?.scrollIntoView({
+      block: "start",
+      inline: "nearest",
+      behavior: "smooth",
+    });
   }, []);
 
   return (
@@ -102,15 +102,21 @@ const ColorChanger: FC<ColorChangerProps> = ({ slice }) => {
         >
           {Array.from({ length: 20 }, (_, idx) => (
             <tspan x={`${(idx + 1) * 10}`} dy={idx === 0 ? -50 : 6} key={idx}>
-              {Array.from({ length: 10 }, () => backgroundText).join(" ")}
+              {Array.from({ length: 20 }, () => backgroundText).join(" ")}
             </tspan>
           ))}
         </text>
       </svg>
 
       <Canvas
-        className="grow border-2 border-red-400"
-        camera={{ position: [0, 0.5, 0.5], fov: 45, zoom: scale }}
+        className="grow"
+        camera={{ position: [0, 0.5, 0.5], fov: 45, zoom: 1.5 }}
+        onCreated={(r) => {
+          const width = document.documentElement.clientWidth;
+          if (width < 728) r.camera.zoom = 0.9;
+          else if (width < 1024) r.camera.zoom = 1.2;
+          else r.camera.zoom = 2.5;
+        }}
       >
         <Scene
           selectedTextureId={selectedTextureId}
@@ -122,36 +128,41 @@ const ColorChanger: FC<ColorChangerProps> = ({ slice }) => {
         className="relative shrink-0"
         innerClassName="gap-6 lg:gap-8 flex items-center flex-col lg:flex-row-reverse"
       >
-        <ul className="mx-auto place-content-center grid row grid-cols-3 gap-2 rounded-2xl bg-white p-4 text-black shadow-lg sm:grid-cols-6">
-          {KEYCAP_TEXTURES.map((texture) => (
-            <li key={texture.id}>
-              <button
-                onClick={() => handleTextureSelect(texture)}
-                disabled={isAnimating}
-                className={clsx(
-                  "flex aspect-square relative h-full flex-col items-center justify-center rounded-lg border-2 p-4 hover:scale-105 motion-safe:transition-all motion-safe:duration-300",
-                  selectedTextureId === texture.id
-                    ? "border-[#81bfed] bg-[#81bfed]/20"
-                    : "cursor-pointer border-gray-300 hover:border-gray-500",
-                  isAnimating && "cursor-not-allowed opacity-50",
-                )}
-              >
-                <div className="mb-3 overflow-hidden rounded border-2 border-black bg-gray-100 sm:w-16">
-                  <Image
-                    src={texture.path}
-                    alt={texture.name}
-                    width={400}
-                    height={255}
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-                <span className="absolute bottom-2 text-center font-bold-slanted text-sm md:text-lg">
-                  {texture.name}
-                </span>
-              </button>
-            </li>
-          ))}
-        </ul>
+        <div className="flex-col flex gap-4">
+          <h2 className="font-bold-slanted -mt-24 lg:-mt-6 text-center text-6xl sm:text-8xl">
+            {backgroundText}
+          </h2>
+          <ul className="mx-auto place-content-center grid row grid-cols-3 gap-2 rounded-2xl bg-white p-4 text-black shadow-lg sm:grid-cols-6">
+            {KEYCAP_TEXTURES.map((texture) => (
+              <li key={texture.id}>
+                <button
+                  onClick={() => handleTextureSelect(texture)}
+                  disabled={isAnimating}
+                  className={clsx(
+                    "flex aspect-square relative h-full flex-col items-center justify-center rounded-lg border-2 p-4 hover:scale-105 motion-safe:transition-all motion-safe:duration-300",
+                    selectedTextureId === texture.id
+                      ? "border-[#81bfed] bg-[#81bfed]/20"
+                      : "cursor-pointer border-gray-300 hover:border-gray-500",
+                    isAnimating && "cursor-not-allowed opacity-50",
+                  )}
+                >
+                  <div className="mb-3 overflow-hidden rounded border-2 border-black bg-gray-100 sm:w-16">
+                    <Image
+                      src={texture.path}
+                      alt={texture.name}
+                      width={400}
+                      height={255}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                  <span className="absolute bottom-2 text-center font-bold-slanted text-sm md:text-lg">
+                    {texture.name}
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
 
         <div className="max-w-sm shrink-0 lg:pl-6">
           <h2 className="mb-1 font-bold-slanted text-4xl uppercase lg:mb-2 lg:text-6xl">

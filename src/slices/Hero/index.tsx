@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, Suspense, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -15,8 +15,6 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 import Loader from "@/components/Loader";
 import { useProgress } from "@react-three/drei";
 import clsx from "clsx";
-import { AiOutlineDown } from "react-icons/ai";
-import Link from "next/link";
 
 gsap.registerPlugin(useGSAP, SplitText, ScrollTrigger);
 
