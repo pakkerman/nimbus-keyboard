@@ -43,7 +43,7 @@ const SlicePlayground: FC<SlicePlaygroundProps> = ({ slice }) => {
 
         <FadeIn
           targetChildren
-          className="grid grid-cols-1 gap-4 overflow-hidden sm:grid-cols-2"
+          className="grid grid-cols-2 gap-4 overflow-hidden sm:grid-cols-2 lg:grid-cols-4"
         >
           {slice.primary.switches.map((item) =>
             isFilled.contentRelationship(item.switch) ? (
@@ -84,11 +84,11 @@ const SharedCanvas = ({ color }: SharedCanvasProps) => {
   };
 
   return (
-    <div className="group relative min-h-96 overflow-hidden rounded-3xl select-none">
+    <div className="group relative min-h-24 sm:min-h-80 overflow-hidden rounded-3xl select-none">
       {/* text button */}
       <button
         onClick={handleSound}
-        className="absolute z-10 bottom-0 left-0 flex items-center gap-3 p-6 font-bold-slanted text-4xl text-white uppercase focus:ring-2 focus:ring-white focus:outline-none"
+        className="absolute bg-black/20 z-10 bottom-0 h-10 sm:h-24 right-0 left-0 flex items-center gap-3 p-4 sm:p-6 font-bold-slanted text-lg sm:text-4xl text-white uppercase focus:ring-2 focus:ring-white focus:outline-none"
       >
         {name} <LuVolume2 />
       </button>
