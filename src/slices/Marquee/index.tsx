@@ -11,13 +11,19 @@ export type MarqueProps = SliceComponentProps<Content.MarqueSlice>;
 const Marque: FC<MarqueProps> = ({ slice }) => {
   const MarqueeContent = () => {
     return (
-      <div className="flex items-center bg-gray-200 py-10 whitespace-nowrap">
+      <div className="flex items-center bg-gray-200 py-4 whitespace-nowrap md:py-8 lg:py-12">
         {slice.primary.phrases.map((item, idx) => (
           <Fragment key={idx}>
-            <div className="px-14 font-bold-slanted text-[180px] text-gray-400/80 md:text-[260px] uppercase [text-box:trim-both_cap_alphabetic]">
+            <div
+              className={clsx(
+                "px-4 font-bold-slanted text-2xl text-gray-400/80 uppercase [text-box:trim-both_cap_alphabetic]",
+                "md:text-6xl md:px-6",
+                "lg:text-8xl lg:px-8",
+              )}
+            >
               {item.text}
             </div>
-            <LogoMark className="size-36" />
+            <LogoMark className="size-6 md:size-12 lg:size-20" />
           </Fragment>
         ))}
       </div>
@@ -33,7 +39,7 @@ const Marque: FC<MarqueProps> = ({ slice }) => {
         aria-hidden="true"
         role="presentation"
       >
-        <div className="flex relative items-center whitespace-nowrap">
+        <div className="relative flex items-center whitespace-nowrap">
           <div
             className={clsx(
               "marquee-track animate-marquee flex",

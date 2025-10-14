@@ -15,6 +15,8 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 import Loader from "@/components/Loader";
 import { useProgress } from "@react-three/drei";
 import clsx from "clsx";
+import { AiOutlineDown } from "react-icons/ai";
+import Link from "next/link";
 
 gsap.registerPlugin(useGSAP, SplitText, ScrollTrigger);
 
@@ -93,6 +95,13 @@ const Hero: FC<HeroProps> = ({ slice }) => {
     });
   });
 
+  const handleFeatureClick = () => {
+    const features = document.querySelector("#features");
+    if (!features) return;
+
+    features.scrollIntoView({ block: "start", behavior: "smooth" });
+  };
+
   return (
     <section
       data-slice-type={slice.slice_type}
@@ -138,10 +147,23 @@ const Hero: FC<HeroProps> = ({ slice }) => {
               }}
             />
           </div>
-          <button className="group flex w-fit cursor-pointer items-center gap-1 rounded bg-[#01A7E1] px-3 py-1 font-bold-slanted text-2xl uppercase transition disabled:grayscale">
-            {slice.primary.buy_button_text}
-            <span className="transition group-hover:translate-x-1">{">"}</span>
-          </button>
+          <div className="flex gap-4">
+            <button
+              onClick={handleFeatureClick}
+              className="group flex w-fit cursor-pointer items-center gap-1 rounded bg-[#01A7E1] px-3 py-1 font-bold-slanted text-2xl uppercase transition disabled:grayscale"
+            >
+              features
+              <span className="transition group-hover:translate-x-1">
+                {">"}
+              </span>
+            </button>
+            <button className="group flex w-fit cursor-pointer items-center gap-1 rounded bg-[#01A7E1] px-3 py-1 font-bold-slanted text-2xl uppercase transition disabled:grayscale">
+              {slice.primary.buy_button_text}
+              <span className="transition group-hover:translate-x-1">
+                {">"}
+              </span>
+            </button>
+          </div>
         </Bounded>
       </div>
     </section>
