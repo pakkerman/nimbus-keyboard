@@ -1,6 +1,8 @@
 "use client";
 
 import { useRef, useState, createContext, useContext } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 import Link from "next/link";
 import { LuChevronRight, LuMenu, LuX } from "react-icons/lu";
 import {
@@ -16,6 +18,9 @@ import {
 import Logo from "./Logo";
 import clsx from "clsx";
 import checkout from "@/checkout";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const DialogContext = createContext<
   [open: boolean, setOpen: (open: boolean) => void]
@@ -23,6 +28,7 @@ const DialogContext = createContext<
 
 export default function Navbar() {
   const button = useRef<HTMLButtonElement>(null);
+  const backdropRef = useRef<HTMLDivElement>(null);
   const state = useState(false);
   const [open, setOpen] = state;
 
@@ -32,8 +38,31 @@ export default function Navbar() {
     if (button.current) button.current.disabled = false;
   }
 
+  useGSAP(() => {
+    if (!backdropRef.current) return;
+    console.log(backdropRef);
+
+    gsap.fromTo(
+      backdropRef.current,
+      { y: "-100%" },
+      {
+        y: "0%",
+        scrollTrigger: {
+          trigger: ".hero",
+          start: "90% top",
+          end: "+=500px",
+          scrub: 0.3,
+        },
+      },
+    );
+  });
+
   return (
     <header className="fixed top-0 right-0 left-0 z-50 flex items-center justify-between p-3 md:p-6">
+      <div
+        ref={backdropRef}
+        className="absolute inset-0 z-[-1] backdrop-blur-md bg-black/20"
+      />
       <Link
         href="/"
         className="shrink-0 hover:scale-105 motion-safe:transition"
