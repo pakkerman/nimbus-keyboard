@@ -132,10 +132,11 @@ const Hero: FC<HeroProps> = ({ slice }) => {
         </Bounded>
         <Bounded
           fullWidth
-          className="hero-body absolute inset-x-0 bottom-0 md:right-[8vw] md:left-auto opacity-0"
+          className="hero-body absolute inset-x-0 bottom-0 md:right-[8vw] z-10 md:left-auto opacity-0"
           innerClassName="flex flex-col gap-3"
         >
-          <div className="max-w-md">
+          {/* <div className="absolute left-0 inset-y-6 bg-black/10 backdrop-blur-md -right-36 border-4 rounded-2xl border-orange-300/80" /> */}
+          <div className="max-w-md z-10">
             <PrismicRichText
               field={slice.primary.body}
               components={{
@@ -147,7 +148,7 @@ const Hero: FC<HeroProps> = ({ slice }) => {
               }}
             />
           </div>
-          <div className="flex gap-4">
+          <div className="flex gap-4 z-10">
             <button
               onClick={handleFeatureClick}
               className="group flex w-fit cursor-pointer items-center gap-1 rounded bg-[#01A7E1] px-3 py-1 font-bold-slanted text-2xl uppercase transition disabled:grayscale"

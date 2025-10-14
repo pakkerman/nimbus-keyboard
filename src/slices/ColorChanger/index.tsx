@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useCallback, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import { Canvas } from "@react-three/fiber";
 import clsx from "clsx";
@@ -53,6 +53,12 @@ type KeycapTexture = (typeof KEYCAP_TEXTURES)[number];
 
 export type ColorChangerProps = SliceComponentProps<Content.ColorChangerSlice>;
 
+const width = document.documentElement.clientWidth;
+let scale = 1.8;
+
+if (width < 768) scale = 0.9;
+else if (width < 1024) scale = 1;
+
 const ColorChanger: FC<ColorChangerProps> = ({ slice }) => {
   const [selectedTextureId, setSelectedTextureId] = useState(
     KEYCAP_TEXTURES[0].id,
@@ -79,7 +85,7 @@ const ColorChanger: FC<ColorChangerProps> = ({ slice }) => {
       id="keycap-changer"
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className="relative flex h-[90vh] min-h-[1000px] flex-col overflow-hidden bg-linear-to-br from-[#0f172a] to-[#062f4a] text-white"
+      className="relative flex h-[90vh] min-h-dvh flex-col overflow-hidden bg-linear-to-br from-[#0f172a] to-[#062f4a] text-white"
     >
       {/* SVG background */}
       <svg
@@ -103,8 +109,8 @@ const ColorChanger: FC<ColorChangerProps> = ({ slice }) => {
       </svg>
 
       <Canvas
-        className="-mb-[10vh] grow"
-        camera={{ position: [0, 0.5, 0.5], fov: 45, zoom: 1.5 }}
+        className="grow border-2 border-red-400"
+        camera={{ position: [0, 0.5, 0.5], fov: 45, zoom: scale }}
       >
         <Scene
           selectedTextureId={selectedTextureId}
@@ -114,32 +120,23 @@ const ColorChanger: FC<ColorChangerProps> = ({ slice }) => {
 
       <Bounded
         className="relative shrink-0"
-        innerClassName="gap-6 lg:gap-8 flex flex-col lg:flex-row"
+        innerClassName="gap-6 lg:gap-8 flex items-center flex-col lg:flex-row-reverse"
       >
-        <div className="max-w-md shrink-0">
-          <h2 className="mb-1 font-bold-slanted text-4xl uppercase lg:mb-2 lg:text-6xl">
-            <PrismicText field={slice.primary.heading} />
-          </h2>
-          <div className="text-pretty lg:text-lg">
-            <PrismicRichText field={slice.primary.description} />
-          </div>
-        </div>
-
-        <ul className="grid grow grid-cols-2 gap-3 rounded-2xl bg-white p-4 text-black shadow-lg sm:grid-cols-3 md:grid-cols-6 lg:grid-cols-3 xl:grid-cols-6">
+        <ul className="mx-auto place-content-center grid row grid-cols-3 gap-2 rounded-2xl bg-white p-4 text-black shadow-lg sm:grid-cols-6">
           {KEYCAP_TEXTURES.map((texture) => (
-            <li key={texture.id} className="">
+            <li key={texture.id}>
               <button
                 onClick={() => handleTextureSelect(texture)}
                 disabled={isAnimating}
                 className={clsx(
-                  "flex aspect-square h-full flex-col items-center justify-center rounded-lg border-2 p-4 hover:scale-105 motion-safe:transition-all motion-safe:duration-300",
+                  "flex aspect-square relative h-full flex-col items-center justify-center rounded-lg border-2 p-4 hover:scale-105 motion-safe:transition-all motion-safe:duration-300",
                   selectedTextureId === texture.id
                     ? "border-[#81bfed] bg-[#81bfed]/20"
                     : "cursor-pointer border-gray-300 hover:border-gray-500",
                   isAnimating && "cursor-not-allowed opacity-50",
                 )}
               >
-                <div className="mb-3 overflow-hidden rounded border-2 border-black bg-gray-100">
+                <div className="mb-3 overflow-hidden rounded border-2 border-black bg-gray-100 sm:w-16">
                   <Image
                     src={texture.path}
                     alt={texture.name}
@@ -148,11 +145,22 @@ const ColorChanger: FC<ColorChangerProps> = ({ slice }) => {
                     className="h-full w-full object-cover"
                   />
                 </div>
-                <span className="text-center">{texture.name}</span>
+                <span className="absolute bottom-2 text-center font-bold-slanted text-sm md:text-lg">
+                  {texture.name}
+                </span>
               </button>
             </li>
           ))}
         </ul>
+
+        <div className="max-w-sm shrink-0 lg:pl-6">
+          <h2 className="mb-1 font-bold-slanted text-4xl uppercase lg:mb-2 lg:text-6xl">
+            <PrismicText field={slice.primary.heading} />
+          </h2>
+          <div className="text-pretty lg:text-lg">
+            <PrismicRichText field={slice.primary.description} />
+          </div>
+        </div>
       </Bounded>
     </section>
   );
