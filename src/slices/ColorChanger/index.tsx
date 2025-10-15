@@ -14,6 +14,7 @@ import {
 
 import Bounded from "@/components/Bounded";
 import Scene from "./Scene";
+import { select } from "three/tsl";
 
 export const KEYCAP_TEXTURES = [
   {
@@ -80,12 +81,22 @@ const ColorChanger: FC<ColorChangerProps> = ({ slice }) => {
     });
   }, []);
 
+  console.log(selectedTextureId);
+
   return (
     <section
       id="keycap-changer"
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className="relative flex h-[90vh] min-h-dvh flex-col overflow-hidden bg-linear-to-br from-[#0f172a] to-[#062f4a] text-white"
+      className={clsx(
+        "relative bg-linear-to-br flex h-[90vh] min-h-dvh flex-col overflow-hidden  text-slate-50",
+        selectedTextureId === "goodwell" && "from-[#441306] to-[#E44E21]",
+        selectedTextureId === "dreamboard" && "from-[#2F0D68] to-[#8E51FF]",
+        selectedTextureId === "cherrynavy" && "from-[#510424] to-[#F06B7E]",
+        selectedTextureId === "kick" && "from-[#432004] to-[#F0B100]",
+        selectedTextureId === "oldschool" && "from-[#1C1917] to-[#B89D82]",
+        selectedTextureId === "candykeys" && "from-[#022F2E] to-[#00BBA7]",
+      )}
     >
       {/* SVG background */}
       <svg

@@ -58,7 +58,7 @@ export default function Navbar() {
   });
 
   return (
-    <header className="fixed top-0 right-0 left-0 z-50 flex items-center justify-between p-3 md:p-6">
+    <header className="fixed top-0 right-0 left-0 z-50 flex items-center justify-between p-3">
       <div
         ref={backdropRef}
         className="absolute inset-0 z-[-1] backdrop-blur-md bg-black/20"
