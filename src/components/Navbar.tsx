@@ -74,17 +74,17 @@ export default function Navbar() {
           ref={button}
           onClick={handleCheckout}
           className={clsx(
-            "group relative flex h-12 transform-gpu cursor-pointer items-center justify-center overflow-hidden rounded bg-gradient-to-r from-[#01A7E1] to-[#0196C9] px-6 py-2.5 font-semibold text-white will-change-transform hover:shadow-lg hover:shadow-[#01A7E1]/25 focus:ring-2 focus:ring-[#01A7E1] focus:ring-offset-2 focus:outline-none disabled:grayscale motion-safe:transition-all motion-safe:duration-300 md:text-base",
+            "group relative flex h-8 md:h-12 transform-gpu cursor-pointer items-center justify-center overflow-hidden rounded bg-gradient-to-r from-[#01A7E1] to-[#0196C9] px-2 md:px-6 py-2.5 font-semibold text-white will-change-transform hover:shadow-lg hover:shadow-[#01A7E1]/25 focus:ring-2 focus:ring-[#01A7E1] focus:ring-offset-2 focus:outline-none disabled:grayscale motion-safe:transition-all motion-safe:duration-300 md:text-base",
             "before:absolute before:inset-0 before:translate-x-[-100%] before:bg-gradient-to-r before:from-white/0 before:via-white/20 before:to-white/0 before:ease-out hover:before:translate-x-[100%] motion-safe:before:transition-transform motion-safe:before:duration-700",
           )}
         >
-          <span className="font-bold-slanted relative z-10 flex items-center gap-2 text-xl uppercase">
+          <span className="font-bold-slanted relative z-10 flex items-center gap-2  text-lg md:text-xl uppercase">
             Buy
             <LuChevronRight className="size-5 group-hover:translate-x-0.5 motion-safe:transition-transform motion-safe:duration-200" />
           </span>
         </button>
         <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger className="flex size-12 cursor-pointer items-center justify-center rounded bg-gray-300 hover:bg-gray-300/80 hover:shadow-lg hover:shadow-black/10 motion-safe:transition">
+          <DialogTrigger className="flex size-8 md:size-12 cursor-pointer items-center justify-center rounded bg-gray-300 hover:bg-gray-300/80 hover:shadow-lg hover:shadow-black/10 motion-safe:transition">
             <LuMenu className="size-5" />
             <span className="sr-only">Toggle menu</span>
           </DialogTrigger>
